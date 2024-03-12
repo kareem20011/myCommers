@@ -1,0 +1,104 @@
+Entities:
+- User (UserID, Name, Email, Password)
+- Product (ProductID, Name, Description, Price, CategoryID)
+- Category (CategoryID, Name, Description)
+- Order (OrderID, UserID, OrderDate, Total)
+- OrderDetail (OrderDetailID, OrderID, ProductID, Quantity, Price)
+
+Relationships:
+- A User can place multiple Orders.
+- An Order contains multiple OrderDetails.
+- Each OrderDetail is associated with one Product.
+- A Product belongs to one Category.
+
+
+///////////////////////////////////////////////////////////////////////
+
+
+Entities:
+- User
+  - Attributes: ID (Primary Key), Name, Email, Password
+  - Relationships: Has many Orders, Has one Shopping Cart
+
+- Product
+  - Attributes: ID (Primary Key), Name, Description, Price, Stock
+  - Relationships: Belongs to many Categories, Can be in many Shopping Carts through Cart_Items
+
+- Order
+  - Attributes: ID (Primary Key), User ID (Foreign Key), Order Date, Status
+  - Relationships: Has many Products through Order_Details, Has one Payment, Has one Shipping
+
+- Shopping Cart
+  - Attributes: ID (Primary Key), User ID (Foreign Key)
+  - Relationships: Has many Products through Cart_Items
+
+- Payment
+  - Attributes: ID (Primary Key), Order ID (Foreign Key), Payment Method, Status
+
+- Shipping
+  - Attributes: ID (Primary Key), Order ID (Foreign Key), Address, Tracking Number
+
+Relationships:
+- Cart_Items (Associative entity between Shopping Cart and Products)
+  - Attributes: Shopping Cart ID (Foreign Key), Product ID (Foreign Key), Quantity
+
+- Order_Details (Associative entity between Order and Products)
+  - Attributes: Order ID (Foreign Key), Product ID (Foreign Key), Quantity, Price
+
+- Category
+  - Attributes: ID (Primary Key), Name, Description
+  - Relationships: Can have many Products
+
+Note: Primary Key (PK), Foreign Key (FK)
+
+
+////////////////////////////////////////////////////
+
+Entities:
+- Main_Category
+  - Attributes: ID (Primary Key), Name, Description
+  - Relationships: Can have many Sub_Categories
+
+- Sub_Category
+  - Attributes: ID (Primary Key), Name, Description, Main_Category ID (Foreign Key)
+  - Relationships: Can have many Products, Belongs to one Main_Category
+
+- User, Product, Order, Shopping Cart, Payment, Shipping (No changes)
+
+Relationships:
+- Cart_Items (Associative entity between Shopping Cart and Products)
+  - Attributes: Shopping Cart ID (Foreign Key), Product ID (Foreign Key), Quantity
+
+- Order_Details (Associative entity between Order and Products)
+  - Attributes: Order ID (Foreign Key), Product ID (Foreign Key), Quantity, Price
+
+- Products now belong to Sub_Categories instead of Categories
+
+
+///////////////////////////////////////////////////////////////////////////
+
+Entities:
+1. **User**: Stores comprehensive user information.
+2. **Product**: Contains detailed information about products.
+3. **Main_Category**: Represents the top-level categories of products.
+4. **Sub_Category**: Represents sub-categories under each main category.
+5. **Order**: Records the transactions made by users.
+6. **Order_List**: Lists the products included in each order.
+
+Relationships:
+- A **User** can place multiple **Orders** (One-to-Many).
+- An **Order** can have multiple **Products** through **Order_List** (One-to-Many).
+- A **Product** belongs to one **Sub_Category** (Many-to-One).
+- A **Sub_Category** is nested within one **Main_Category** (Many-to-One).
+
+Attributes:
+- **User**: User_ID (PK), Name, Email, Password, Address, Phone_Number.
+- **Product**: Product_ID (PK), Name, Description, Price, Image_URL, Sub_Category_ID (FK).
+- **Main_Category**: Main_Category_ID (PK), Name.
+- **Sub_Category**: Sub_Category_ID (PK), Name, Main_Category_ID (FK).
+- **Order**: Order_ID (PK), Order_Date, Total_Amount, User_ID (FK).
+- **Order_List**: Order_List_ID (PK), Order_ID (FK), Product_ID (FK), Quantity, Price.
+
+Primary Keys (PK) are unique identifiers for the respective entities, and Foreign Keys (FK) are used to establish relationships between entities.
+
+Note: This ERD is still a simplified model and can be expanded with additional entities like Payment_Details, Shipping_Info, etc., depending on the complexity required for the e-commerce website.
